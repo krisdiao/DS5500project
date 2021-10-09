@@ -5,7 +5,8 @@ Freddie Mac is a public government-sponsored enterprise (GSE) and was chartered 
 Their mission is to provide liquidity, stability and affordability to the U.S. housing market. Freddie
 Mac is making the loan datasets openly accessible as part of an effort to increase transparency and
 help investors build more accurate credit performance models in support of ongoing and future credit
-risk-sharing transactions.
+risk-sharing transactions.   
+
 With this project, we aim to build several benchmarking high-accuracy predictive models that can
 evaluate the risks of issued single-family mortgage loans and select the best performer to deploy into a
 user-friendly reactable application. We plan to approach the problem by first defining risky events
@@ -17,7 +18,8 @@ classification models that identify the probability of the risk event, or regres
 the target risk score by finding the coefficient relationship between target and input features. We also
 plan to perform clustering to group the provided loans into similar risk levels to assist the model
 building process. Eventually, if time and funding permits, we hope to create and deploy an interactive
-application that utilizes the best performing algorithm.
+application that utilizes the best performing algorithm.   
+
 ## 1.2 Project Relevance
 Since the dataset provides extensive details that track the financials of the mortgage loans at their
 origination and their monthly performance after being issued, it can be used for generating business
