@@ -1,0 +1,6 @@
+##############################
+## Folders                  ##
+##############################
+SampleInputFiles/*
+SampleOriginationCombined.csv
+SamplePerformanceCombinedSummary.csv
