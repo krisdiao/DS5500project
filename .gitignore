@@ -1,6 +1,6 @@
 ##############################
 ## Folders                  ##
 ##############################
+.idea/*
 SampleInputFiles/*
-SampleOriginationCombined.csv
-SamplePerformanceCombinedSummary.csv
+*.csv
