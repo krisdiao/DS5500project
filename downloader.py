@@ -117,13 +117,25 @@ def fillNA(df):
     df['misc_costs'] = df['misc_costs'].fillna(0)
     df['actual_loss'] = df['actual_loss'].fillna(0)
     df['modcost'] = df['modcost'].fillna(0)
+    df['step_mod_flag'] = df['step_mod_flag'].fillna('NOT_STEP_MOD')
+    df['def_payment_plan'] = df['def_payment_plan'].fillna('N')
+    df['eltv'] = df['eltv'].fillna(0)
+    df['zero_bal_upb'] = df['zero_bal_upb'].fillna(0)
+    df['deliq_accrued_int'] = df['deliq_accrued_int'].fillna(0)
+    df['deliq_disaster'] = df['deliq_disaster'].fillna('N')
+    df['borrower_stat_code'] = df['borrower_stat_code'].fillna('NA')
+    df['curr_month_mod_cost'] = df['curr_month_mod_cost'].fillna(0)
+    df['int_bearing_upb'] = df['int_bearing_upb']
+
     return df
 
 
 def changedtype(df):
     # Change the data types for all column
-    df[['loan_age', 'mths_remng', 'cd_zero_bal', 'non_int_brng_upb', 'delq_sts', 'actual_loss']] = df[
-        ['loan_age', 'mths_remng', 'cd_zero_bal', 'non_int_brng_upb', 'delq_sts', 'actual_loss']].astype('int64')
+    df[['loan_age', 'mths_remng', 'cd_zero_bal', 'non_int_brng_upb', 'delq_sts', 'actual_loss',
+        'zero_bal_upb', 'deliq_accrued_int', 'curr_month_mod_cost', 'int_bearing_upb']] = df[
+        ['loan_age', 'mths_remng', 'cd_zero_bal', 'non_int_brng_upb', 'delq_sts', 'actual_loss',
+         'zero_bal_upb', 'deliq_accrued_int', 'curr_month_mod_cost', 'int_bearing_upb']].astype('int64')
     df[['svcg_cycle', 'dt_zero_bal', 'dt_lst_pi']] = df[['svcg_cycle', 'dt_zero_bal', 'dt_lst_pi']].astype('str')
     return df
 
@@ -231,9 +243,12 @@ def createPerformanceCombined(str):
                                          'repch_flag', 'flag_mod', 'cd_zero_bal', 'dt_zero_bal', 'current_int_rt',
                                          'non_int_brng_upb', 'dt_lst_pi', 'mi_recoveries', 'net_sale_proceeds',
                                          'non_mi_recoveries', 'expenses', 'legal_costs', 'maint_pres_costs',
-                                         'taxes_ins_costs', 'misc_costs', 'actual_loss', 'modcost'],
+                                         'taxes_ins_costs', 'misc_costs', 'actual_loss', 'modcost', 'step_mod_flag',
+                                         'def_payment_plan', 'eltv', 'zero_bal_upb', 'deliq_accrued_int',
+                                         'deliq_disaster', 'borrower_stat_code', 'curr_month_mod_cost',
+                                         'int_bearing_upb'],
                                   skipinitialspace=True)
-            perf_df['delq_sts'] = [999 if x == 'R' else x for x in (perf_df['delq_sts'].apply(lambda x: x))]
+            perf_df['delq_sts'] = [999 if x == 'RA' else x for x in (perf_df['delq_sts'].apply(lambda x: x))]
             perf_df['delq_sts'] = [0 if x == 'XX' else x for x in (perf_df['delq_sts'].apply(lambda x: x))]
             perf_df = fillNA(perf_df)
             perf_df = changedtype(perf_df)
@@ -300,14 +315,14 @@ def main():
     print("END YEAR=" + (endYear))
 
     payload = payloadCreation(user, passwd)
-    getFilesFromFreddieMac(payload, startYear, endYear)
+    #getFilesFromFreddieMac(payload, startYear, endYear)
     foldername = 'SampleInputFiles'
 
-    sampleOrigFiles = str(os.getcwd()) + "/" + foldername + "/sample_orig_*.txt"
+    #sampleOrigFiles = str(os.getcwd()) + "/" + foldername + "/sample_orig_*.txt"
     samplePerfFiles = str(os.getcwd()) + "/" + foldername + "/sample_svcg_*.txt"
 
-    createOriginationCombined(sampleOrigFiles)
-    #createPerformanceCombined(samplePerfFiles)
+    #createOriginationCombined(sampleOrigFiles)
+    createPerformanceCombined(samplePerfFiles)
 
 
 if __name__ == '__main__':
