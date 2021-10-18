@@ -229,7 +229,7 @@ def createPerformanceCombined(str):
     print(str)
     writeHeader2 = True
     if "sample" in str:
-        filename = "SamplePerformanceCombinedSummary.csv"
+        filename = "SamplePerformanceCombined.csv"
     else:
         filename = "HistoricalPerformanceCombinedSummary.csv"
 
@@ -252,6 +252,7 @@ def createPerformanceCombined(str):
             perf_df['delq_sts'] = [0 if x == 'XX' else x for x in (perf_df['delq_sts'].apply(lambda x: x))]
             perf_df = fillNA(perf_df)
             perf_df = changedtype(perf_df)
+            """
             summ_df = pd.DataFrame()
             summ_df['id_loan'] = perf_df['id_loan'].drop_duplicates()
             summ_df = summ_df.join(
@@ -284,7 +285,12 @@ def createPerformanceCombined(str):
                 writeHeader2 = False
             else:
                 summ_df.to_csv(file, mode='a', header=False, index=False)
-
+            """
+            if writeHeader2 is True:
+                perf_df.to_csv(file, mode='a', header=True, index=False)
+                writeHeader2 = False
+            else:
+                perf_df.to_csv(file, mode='a', header=False, index=False)
 
 def main():
     ts = time.time()
@@ -315,7 +321,7 @@ def main():
     print("END YEAR=" + (endYear))
 
     payload = payloadCreation(user, passwd)
-    #getFilesFromFreddieMac(payload, startYear, endYear)
+    getFilesFromFreddieMac(payload, startYear, endYear)
     foldername = 'SampleInputFiles'
 
     #sampleOrigFiles = str(os.getcwd()) + "/" + foldername + "/sample_orig_*.txt"
